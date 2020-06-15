@@ -3,7 +3,7 @@
 function terragruntApply {
   # Gather the output of `terragrunt apply`.
   echo "apply: info: applying Terragrunt configuration in ${tfWorkingDir}"
-  applyOutput=$(${tfBinary} apply -auto-approve -input=false ${*} 2>&1)
+  applyOutput=$(${tfBinary} apply-all -auto-approve -input=false ${*} 2>&1)
   applyExitCode=${?}
   applyCommentStatus="Failed"
 
@@ -24,7 +24,7 @@ function terragruntApply {
 
   # Comment on the pull request if necessary.
   if [ "$GITHUB_EVENT_NAME" == "pull_request" ] && [ "${tfComment}" == "1" ]; then
-    applyCommentWrapper="#### \`${tfBinary} apply\` ${applyCommentStatus}
+    applyCommentWrapper="#### \`${tfBinary} apply-all\` ${applyCommentStatus}
 <details><summary>Show Output</summary>
 
 \`\`\`
